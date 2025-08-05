@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audecoder - Audio Encoder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 1.1em;
+        }
+
+        .upload-section {
+            margin-bottom: 30px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-input:hover {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #00ff88;
+            cursor: pointer;
+        }
+
+        .control-description {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 6px;
+            border-left: 3px solid #00ff88;
+        }
+
+        .control-description small {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+            display: block;
+        }
+
+        .range-value {
+            display: inline-block;
+            float: right;
+            background: rgba(0, 255, 136, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            margin: 5px;
+            min-width: 120px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .status {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .status.success {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+        }
+
+        .status.error {
+            background: rgba(255, 71, 87, 0.2);
+            border: 1px solid #ff4757;
+        }
+
+        .audio-player {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .audio-player audio {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+
+        .footer a {
+            color: #00ff88;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎵 Audecoder</h1>
+            <p>Audio Encoder - Create obfuscated MP3 files</p>
+        </div>
+
+        <div class="upload-section">
+            <input type="file" id="audioFile" accept="audio/*" class="file-input" />
+        </div>
+
+
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="baseFrequency">
+                    Obfuscation Pitch <span class="range-value" id="freqValue">600 Hz</span>
+                </label>
+                <input type="range" id="baseFrequency" min="100" max="2000" value="600" step="50" />
+                <div class="control-description">
+                    <small>Controls the pitch of the interference sounds. Higher values = higher pitched noise. Different pitches make it harder for audio recognition systems to identify your song.</small>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="amplitude">
+                    Interference Strength <span class="range-value" id="ampValue">0.1</span>
+                </label>
+                <input type="range" id="amplitude" min="0.01" max="0.5" value="0.1" step="0.01" />
+                <div class="control-description">
+                    <small>Controls how loud the interference sounds are. Higher values = stronger obfuscation but more noticeable noise. Lower values = more subtle but less protection.</small>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="sourceVolume">
+                    Original Audio Level <span class="range-value" id="srcValue">0.03</span>
+                </label>
+                <input type="range" id="sourceVolume" min="0.001" max="0.1" value="0.03" step="0.001" />
+                <div class="control-description">
+                    <small>Controls how quiet the original song becomes during encoding. Lower values = stronger obfuscation but requires more amplification when decoding. <strong>Current setting will amplify by <span id="amplificationFactor">3333x</span> when decoded.</strong></small>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div style="text-align: center;">
+            <button id="encodeBtn" class="button" disabled>🎛️ Encode Audio</button>
+            <button id="playOriginal" class="button secondary" disabled>▶️ Play Original</button>
+            <button id="playEncoded" class="button secondary" disabled>▶️ Play Encoded</button>
+        </div>
+
+        <div class="progress" id="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <div class="audio-player">
+            <div style="margin: 10px 0;">
+                <strong>Original Audio:</strong>
+                <audio id="originalAudio" controls style="display: none;"></audio>
+            </div>
+            <div style="margin: 10px 0;">
+                <strong>Encoded Audio:</strong>
+                <audio id="encodedAudio" controls style="display: none;"></audio>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button id="downloadWavBtn" class="button secondary" disabled>💾 Download WAV</button>
+            <button id="downloadMp3Btn" class="button" disabled>💾 Download MP3</button>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin: 10px 0;">
+                <h3 style="color: #00ff88; margin-bottom: 10px;">🎛️ Settings Guide</h3>
+                <p style="font-size: 0.9em; opacity: 0.8; text-align: left;">
+                    <strong>Quick Start:</strong> Default settings work great for most songs!<br><br>
+                    <strong>For stronger protection:</strong> Lower original audio level + increase interference<br>
+                    <strong>For different sound:</strong> Adjust obfuscation pitch<br>
+                    <strong>For subtlety:</strong> Higher original audio level + lower interference<br>
+                    <strong>Watch the amplification:</strong> Lower audio levels need higher decoder amplification
+                </p>
+            </div>
+            <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin: 10px 0;">
+                <h3 style="color: #00ff88; margin-bottom: 10px;">💡 Download Tips</h3>
+                <p style="font-size: 0.9em; opacity: 0.8;">
+                    <strong>WAV:</strong> Uncompressed, high quality, larger file size<br>
+                    <strong>MP3:</strong> Compressed, smaller file size, universal compatibility
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Compatible with <a href="#">Audecoder Browser Extension</a></p>
+            <p>Encodes audio using high-frequency sine wave injection</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.0/lame.min.js"></script>
+    <script src="encoder.js"></script>
+</body>
+</html>

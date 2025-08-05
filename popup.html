@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audecoder</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+                <h1>Audecoder</h1>
+            </div>
+            <div class="version">v1.0.0</div>
+        </div>
+
+        <!-- Status Display -->
+        <div class="status-section">
+            <div class="status-item">
+                <span class="status-label">Status:</span>
+                <span id="status-text" class="status-value">Loading...</span>
+                <div id="status-indicator" class="status-indicator"></div>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Player:</span>
+                <span id="player-status" class="status-value">Checking...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Audecode File:</span>
+                <span id="audecode-status" class="status-value">Checking...</span>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-section">
+            <button id="toggle-btn" class="toggle-button" disabled>
+                <span id="toggle-text">Loading...</span>
+            </button>
+            
+            <div class="secondary-controls">
+                <button id="restart-btn" class="secondary-button" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10M3.51 15A9 9 0 0 0 18.36 18.36L23 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Restart
+                </button>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="info-item">
+                <div class="info-icon">ℹ️</div>
+                <div class="info-text">
+                    <strong>How it works:</strong><br>
+                    Decodes audio files encoded with our encoder by applying notch filtering and amplification.
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">🎯</div>
+                <div class="info-text">
+                    <strong>Smart Detection:</strong><br>
+                    Extension automatically applies effects only to tracks with "audecode" in the title. Safe for regular music!
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#" id="help-link">Help</a>
+                <a href="#" id="github-link">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
