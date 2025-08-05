@@ -2,6 +2,10 @@
 
 A browser extension that decodes audio files encoded with the included encoder application when played on YouTube Music. The extension automatically detects tracks with "audecode" in their title and applies real-time decoding.
 
+![Video Demo](https://youtu.be/oooTLFSkq-k)
+
+(Song sounds low-quality during live decoding because I'm a bad music producer)
+
 ## Features
 
 ### Browser Extension
