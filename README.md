@@ -4,6 +4,8 @@ A browser extension that decodes audio files encoded with the included encoder a
 
 [Video Demo](https://youtu.be/oooTLFSkq-k)
 
+[Test Video to use if you don't want to encode a track](https://music.youtube.com/watch?v=Q-o29bI6jrA)
+
 (Song sounds low-quality during live decoding because I'm a bad music producer)
 
 ## Features
