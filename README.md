@@ -119,9 +119,7 @@ filterGain: [1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1]
 ### Browser Compatibility
 
 - **Chrome**: Full support (recommended)
-- **Firefox**: Full support
-- **Safari**: Partial support (Web Audio API limitations)
-- **Edge**: Full support
+- **Firefox**: **Extension functionality works, just not the extension status display**
 
 ### File Format Support
 
